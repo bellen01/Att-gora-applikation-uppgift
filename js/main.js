@@ -10,21 +10,29 @@ addChore.addEventListener('click', function () {
     newChoreInput.setAttribute('type', 'text');
     input.value = '';
     newChoreInput.setAttribute('disabled', 'true');
-    //newChoreInput.toggleAttribute("disabled");
 
 
     let changeChoreBtn = document.createElement('button');
     changeChoreBtn.innerHTML = "Ändra";
     changeChoreBtn.addEventListener('click', function () {
-        changeChoreBtn.innerHTML = "Spara";
         newChoreInput.toggleAttribute("disabled");
+        if (changeChoreBtn.innerHTML === "Ändra") {
+            changeChoreBtn.innerHTML = "Spara";
+        }
+        else {
+            changeChoreBtn.innerHTML = "Ändra";
+        }
     })
 
     let completedChoreBtn = document.createElement('button');
     completedChoreBtn.innerHTML = "Färdig";
-    completedChoreBtn.addEventListener('click', function () {
-
+    completedChoreBtn.addEventListener('click', function (e) {
+        let completedChoresList = document.getElementById('completed-chores-list');
+        completedChoresList.append(e.target.parentNode);
+        e.target.remove();
     })
+
+
 
     let deleteChoreBtn = document.createElement('button');
     deleteChoreBtn.innerHTML = "Radera";
@@ -38,15 +46,13 @@ addChore.addEventListener('click', function () {
 
 })
 
-// let removeAllChores = document.getElementById('remove-all-chores-btn');
-// removeAllChores.addEventListener('click', function () {
-//     let li = document.getElementsByTagName('li');
-//     li.innerHTML = "";
-// })
 
-//Återställ knappen
-let removeAllChores = document.getElementById('remove-all-chores-btn');
-removeAllChores.addEventListener('click', function () {
+//Återställ knappen skapad med js
+let removeAllChoresBtn = document.createElement("button");
+removeAllChoresBtn.innerHTML = "Återställ";
+let placeBesideAddChoreBtn = document.getElementById("add-chore-btns");
+placeBesideAddChoreBtn.append(removeAllChoresBtn);
+removeAllChoresBtn.addEventListener('click', function () {
     let ul = document.getElementsByTagName('ul');
     for (let i of ul) {
         while (i.lastElementChild) {
@@ -55,11 +61,15 @@ removeAllChores.addEventListener('click', function () {
     }
 })
 
+
+//Återställ knappen fast med knappen redan skapad i html-dokumentet
 // let removeAllChores = document.getElementById('remove-all-chores-btn');
 // removeAllChores.addEventListener('click', function () {
+//     let ul = document.getElementsByTagName('ul');
 //     for (let i of ul) {
-//         for (let child of i) {
-//             child.lastElementChild.remove();
+//         while (i.lastElementChild) {
+//             i.firstElementChild.remove();
 //         }
 //     }
 // })
+
