@@ -14,13 +14,13 @@ addChore.addEventListener('click', function () {
 
     let changeChoreBtn = document.createElement('button');
     changeChoreBtn.innerHTML = "Ändra";
-    changeChoreBtn.addEventListener('click', function () {
+    changeChoreBtn.addEventListener('click', function (e) {
         newChoreInput.toggleAttribute("disabled");
-        if (changeChoreBtn.innerHTML === "Ändra") {
-            changeChoreBtn.innerHTML = "Spara";
+        if (e.target.innerHTML === "Ändra") {
+            e.target.innerHTML = "Spara";
         }
         else {
-            changeChoreBtn.innerHTML = "Ändra";
+            e.target.innerHTML = "Ändra";
         }
     })
 
