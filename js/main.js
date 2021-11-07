@@ -1,20 +1,49 @@
 
+let errorMessage = 'Skriv i en syssla';
+function isStringEmpty(text) {
+    return text.trim() === "";
+}
 
+
+
+//Lägg till knappens funktioner
 let addChore = document.getElementById('add-chore-btn');
+let input = document.getElementById('add-chore')
+
+//Början på att lägga till enter. Lägg till om tid finns.
+// input.addEventListener('keyup' function() {})
 
 addChore.addEventListener('click', function () {
     let li = document.createElement('li');
     let newChoreInput = document.createElement("input");
-    let input = document.getElementById('add-chore')
     newChoreInput.value = input.value;
     newChoreInput.setAttribute('type', 'text');
+    let displayErrorMessage = document.getElementsByClassName('display-error-message');
+    if (isStringEmpty(input.value)) {
+        // errorMessage = 'Skriv i en syssla'
+        displayErrorMessage.innerHTML = errorMessage;
+        return;
+    }
+    displayErrorMessage.innerHTML = '';
     input.value = '';
     newChoreInput.setAttribute('disabled', 'true');
+    let placeholderForErrorMessageDiv = document.createElement('div');
+    placeholderForErrorMessageDiv.className = 'display-error-message';
 
 
+    //Ändra knappens funktioner
     let changeChoreBtn = document.createElement('button');
     changeChoreBtn.innerHTML = "Ändra";
     changeChoreBtn.addEventListener('click', function (e) {
+        if (isStringEmpty(newChoreInput.value)) {
+            // errorMessage = 'Skriv i en syssla'
+            // let displayErrorMessage = document.createElement("div");
+            // displayErrorMessage.className = 'addErrorMessage';
+            placeholderForErrorMessageDiv.innerHTML = errorMessage;
+            // e.target.parentNode.append(placeholderForErrorMessageDiv);
+            return;
+        }
+        placeholderForErrorMessageDiv.innerHTML = '';
         newChoreInput.toggleAttribute("disabled");
         if (e.target.innerHTML === "Ändra") {
             e.target.innerHTML = "Spara";
@@ -24,6 +53,8 @@ addChore.addEventListener('click', function () {
         }
     })
 
+
+    //Färdig-knappens funktioner
     let completedChoreBtn = document.createElement('button');
     completedChoreBtn.innerHTML = "Färdig";
     completedChoreBtn.addEventListener('click', function (e) {
@@ -33,7 +64,7 @@ addChore.addEventListener('click', function () {
     })
 
 
-
+    //Radera knappens funktioner
     let deleteChoreBtn = document.createElement('button');
     deleteChoreBtn.innerHTML = "Radera";
     deleteChoreBtn.addEventListener('click', function (e) {
@@ -42,7 +73,7 @@ addChore.addEventListener('click', function () {
 
     let toDoChores = document.getElementById('to-do-list');
     toDoChores.append(li);
-    li.append(newChoreInput, changeChoreBtn, completedChoreBtn, deleteChoreBtn);
+    li.append(newChoreInput, changeChoreBtn, completedChoreBtn, deleteChoreBtn, placeholderForErrorMessageDiv);
 
 })
 
@@ -73,3 +104,26 @@ removeAllChoresBtn.addEventListener('click', function () {
 //     }
 // })
 
+// let errorMessage = "";
+// if (isStringEmpty(inputEmail.value)) {
+//     errorMessage += 'Email is required!<br>';
+// }
+// if (isStringEmpty(inputPassword.value)) {
+//     errorMessage += 'Password is required!<br>';
+// }
+// if (isStringEmpty(inputAddress.value)) {
+//     errorMessage += 'Address is required!<br>';
+// }
+// if (isStringEmpty(inputAddress2.value)) {
+//     errorMessage += 'Second address is required!<br>';
+// }
+// if (isStringEmpty(inputCity.value)) {
+//     errorMessage += 'City is required!<br>';
+// }
+// if (isStringEmpty(inputZip.value)) {
+//     errorMessage += 'Zip code is required!<br>';
+// }
+
+// function isStringEmpty(text) {
+//     return text.trim() === "";         //  true/false
+// }
