@@ -5,6 +5,65 @@ function isStringEmpty(text) {
 }
 
 
+class btnFunctions {
+
+    //funktion för ändra knappen
+    changeChoreBtnClick(inputNewChore, placeholderErrorMessage, eTarget) {
+        if (isStringEmpty(inputNewChore.value)) {
+            placeholderErrorMessage.innerHTML = errorMessage;
+            return;
+        }
+        placeholderErrorMessage.innerHTML = '';
+        inputNewChore.toggleAttribute("disabled");
+        if (eTarget.innerHTML === "Ändra") {
+            eTarget.innerHTML = "Spara";
+        }
+        else {
+            eTarget.innerHTML = "Ändra";
+        }
+    }
+
+    //funktion för klicket för färdig-knappen
+    completedChoreBtn(e) {
+        let completedChoresList = document.getElementById('completed-chores-list');
+        completedChoresList.append(e.target.parentNode);
+        e.target.remove();
+    }
+
+
+    //funktion för klicket för radera-knappen
+    deleteChoreBtn(e) {
+        e.target.parentNode.remove();
+    }
+
+}
+
+
+let clickBtnFunction = new btnFunctions();
+
+
+//Objekt med funktioner/methods i:
+// let functionsForBtns = {
+
+// completedChoreBtn: function(e) {
+//     let completedChoresList = document.getElementById('completed-chores-list');
+//     completedChoresList.append(e.target.parentNode);
+//     e.target.remove();
+// }
+
+// deleteChoreBtn: function(e) {
+//     e.target.parentNode.remove();
+// }
+
+//     deleteChoreBtn: function() {
+//         deleteChoreBtn.innerHTML = "Radera";
+//         deleteChoreBtn.addEventListener('click', function (e) {
+//             e.target.parentNode.remove();
+//         })
+//     }
+// }
+
+
 
 //Lägg till knappens funktioner
 let addChore = document.getElementById('add-chore-btn');
@@ -31,45 +90,69 @@ addChore.addEventListener('click', function () {
     placeholderForErrorMessageDiv.className = 'display-error-message';
 
 
-    //Ändra knappens funktioner
+
+    //Försök till att lyfta ur ändra-knappens click-funktion till objekt och class
     let changeChoreBtn = document.createElement('button');
     changeChoreBtn.innerHTML = "Ändra";
-    changeChoreBtn.addEventListener('click', function (e) {
-        if (isStringEmpty(newChoreInput.value)) {
-            // errorMessage = 'Skriv i en syssla'
-            // let displayErrorMessage = document.createElement("div");
-            // displayErrorMessage.className = 'addErrorMessage';
-            placeholderForErrorMessageDiv.innerHTML = errorMessage;
-            // e.target.parentNode.append(placeholderForErrorMessageDiv);
-            return;
-        }
-        placeholderForErrorMessageDiv.innerHTML = '';
-        newChoreInput.toggleAttribute("disabled");
-        if (e.target.innerHTML === "Ändra") {
-            e.target.innerHTML = "Spara";
-        }
-        else {
-            e.target.innerHTML = "Ändra";
-        }
+    changeChoreBtn.addEventListener("click", function (e) {
+        clickBtnFunction.changeChoreBtnClick(newChoreInput, placeholderForErrorMessageDiv, e.target);
     })
 
+
+
+    //Ändra knappen med gammal kod
+    // let changeChoreBtn = document.createElement('button');
+    // changeChoreBtn.innerHTML = "Ändra";
+    // changeChoreBtn.addEventListener('click', function (e) {
+    //     if (isStringEmpty(newChoreInput.value)) {
+    //         // errorMessage = 'Skriv i en syssla'
+    //         // let displayErrorMessage = document.createElement("div");
+    //         // displayErrorMessage.className = 'addErrorMessage';
+    //         placeholderForErrorMessageDiv.innerHTML = errorMessage;
+    //         // e.target.parentNode.append(placeholderForErrorMessageDiv);
+    //         return;
+    //     }
+    //     placeholderForErrorMessageDiv.innerHTML = '';
+    //     newChoreInput.toggleAttribute("disabled");
+    //     if (e.target.innerHTML === "Ändra") {
+    //         e.target.innerHTML = "Spara";
+    //     }
+    //     else {
+    //         e.target.innerHTML = "Ändra";
+    //     }
+    // })
 
     //Färdig-knappens funktioner
+    // let completedChoreBtn = document.createElement('button');
+    // completedChoreBtn.innerHTML = "Färdig";
+    // completedChoreBtn.addEventListener('click', function (e) {
+    //     let completedChoresList = document.getElementById('completed-chores-list');
+    //     completedChoresList.append(e.target.parentNode);
+    //     e.target.remove();
+    // })
+
+
+    //Försök till att lyfta ur färdig-knappens click-funktion till objekt och class
     let completedChoreBtn = document.createElement('button');
     completedChoreBtn.innerHTML = "Färdig";
-    completedChoreBtn.addEventListener('click', function (e) {
-        let completedChoresList = document.getElementById('completed-chores-list');
-        completedChoresList.append(e.target.parentNode);
-        e.target.remove();
-    })
+    completedChoreBtn.addEventListener("click", clickBtnFunction.completedChoreBtn);
 
 
     //Radera knappens funktioner
+    // let deleteChoreBtn = document.createElement('button');
+    // deleteChoreBtn.innerHTML = "Radera";
+    // deleteChoreBtn.addEventListener('click', function (e) {
+    //     e.target.parentNode.remove();
+    // })
+
+
+
+    //Försök till att lyfta ur radera-knappens click-funktion till objekt och class
     let deleteChoreBtn = document.createElement('button');
     deleteChoreBtn.innerHTML = "Radera";
-    deleteChoreBtn.addEventListener('click', function (e) {
-        e.target.parentNode.remove();
-    })
+    deleteChoreBtn.addEventListener("click", clickBtnFunction.deleteChoreBtn);
+
+
 
     let toDoChores = document.getElementById('to-do-list');
     toDoChores.append(li);
@@ -103,27 +186,3 @@ removeAllChoresBtn.addEventListener('click', function () {
 //         }
 //     }
 // })
-
-// let errorMessage = "";
-// if (isStringEmpty(inputEmail.value)) {
-//     errorMessage += 'Email is required!<br>';
-// }
-// if (isStringEmpty(inputPassword.value)) {
-//     errorMessage += 'Password is required!<br>';
-// }
-// if (isStringEmpty(inputAddress.value)) {
-//     errorMessage += 'Address is required!<br>';
-// }
-// if (isStringEmpty(inputAddress2.value)) {
-//     errorMessage += 'Second address is required!<br>';
-// }
-// if (isStringEmpty(inputCity.value)) {
-//     errorMessage += 'City is required!<br>';
-// }
-// if (isStringEmpty(inputZip.value)) {
-//     errorMessage += 'Zip code is required!<br>';
-// }
-
-// function isStringEmpty(text) {
-//     return text.trim() === "";         //  true/false
-// }
