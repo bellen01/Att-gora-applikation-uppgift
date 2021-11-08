@@ -41,7 +41,7 @@ class btnFunctions {
 
 let clickBtnFunction = new btnFunctions();
 
-
+//fundera på om jag vill ha metoderna i ett objekt istället, utan klassen och hur jag gör det isåna fall.
 //Objekt med funktioner/methods i:
 // let functionsForBtns = {
 
@@ -72,6 +72,8 @@ let input = document.getElementById('add-chore')
 //Början på att lägga till enter. Lägg till om tid finns.
 // input.addEventListener('keyup' function() {})
 
+
+
 addChore.addEventListener('click', function () {
     let li = document.createElement('li');
     let newChoreInput = document.createElement("input");
@@ -99,51 +101,10 @@ addChore.addEventListener('click', function () {
     })
 
 
-
-    //Ändra knappen med gammal kod
-    // let changeChoreBtn = document.createElement('button');
-    // changeChoreBtn.innerHTML = "Ändra";
-    // changeChoreBtn.addEventListener('click', function (e) {
-    //     if (isStringEmpty(newChoreInput.value)) {
-    //         // errorMessage = 'Skriv i en syssla'
-    //         // let displayErrorMessage = document.createElement("div");
-    //         // displayErrorMessage.className = 'addErrorMessage';
-    //         placeholderForErrorMessageDiv.innerHTML = errorMessage;
-    //         // e.target.parentNode.append(placeholderForErrorMessageDiv);
-    //         return;
-    //     }
-    //     placeholderForErrorMessageDiv.innerHTML = '';
-    //     newChoreInput.toggleAttribute("disabled");
-    //     if (e.target.innerHTML === "Ändra") {
-    //         e.target.innerHTML = "Spara";
-    //     }
-    //     else {
-    //         e.target.innerHTML = "Ändra";
-    //     }
-    // })
-
-    //Färdig-knappens funktioner
-    // let completedChoreBtn = document.createElement('button');
-    // completedChoreBtn.innerHTML = "Färdig";
-    // completedChoreBtn.addEventListener('click', function (e) {
-    //     let completedChoresList = document.getElementById('completed-chores-list');
-    //     completedChoresList.append(e.target.parentNode);
-    //     e.target.remove();
-    // })
-
-
     //Försök till att lyfta ur färdig-knappens click-funktion till objekt och class
     let completedChoreBtn = document.createElement('button');
     completedChoreBtn.innerHTML = "Färdig";
     completedChoreBtn.addEventListener("click", clickBtnFunction.completedChoreBtn);
-
-
-    //Radera knappens funktioner
-    // let deleteChoreBtn = document.createElement('button');
-    // deleteChoreBtn.innerHTML = "Radera";
-    // deleteChoreBtn.addEventListener('click', function (e) {
-    //     e.target.parentNode.remove();
-    // })
 
 
 
@@ -174,15 +135,3 @@ removeAllChoresBtn.addEventListener('click', function () {
         }
     }
 })
-
-
-//Återställ knappen fast med knappen redan skapad i html-dokumentet
-// let removeAllChores = document.getElementById('remove-all-chores-btn');
-// removeAllChores.addEventListener('click', function () {
-//     let ul = document.getElementsByTagName('ul');
-//     for (let i of ul) {
-//         while (i.lastElementChild) {
-//             i.firstElementChild.remove();
-//         }
-//     }
-// })
