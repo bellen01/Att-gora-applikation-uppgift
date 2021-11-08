@@ -5,9 +5,46 @@ function isStringEmpty(text) {
 }
 
 
-class btnFunctions {
+// class btnFunctions {
 
-    //funktion för ändra knappen
+//     //funktion för ändra knappen
+//     changeChoreBtnClick(inputNewChore, placeholderErrorMessage, eTarget) {
+//         if (isStringEmpty(inputNewChore.value)) {
+//             placeholderErrorMessage.innerHTML = errorMessage;
+//             return;
+//         }
+//         placeholderErrorMessage.innerHTML = '';
+//         inputNewChore.toggleAttribute("disabled");
+//         if (eTarget.innerHTML === "Ändra") {
+//             eTarget.innerHTML = "Spara";
+//         }
+//         else {
+//             eTarget.innerHTML = "Ändra";
+//         }
+//     }
+
+//     //funktion för klicket för färdig-knappen
+//     completedChoreBtn(e) {
+//         let completedChoresList = document.getElementById('completed-chores-list');
+//         completedChoresList.append(e.target.parentNode);
+//         e.target.remove();
+//     }
+
+
+//     //funktion för klicket för radera-knappen
+//     deleteChoreBtn(e) {
+//         e.target.parentNode.remove();
+//     }
+
+// }
+
+
+// let clickBtnFunction = new btnFunctions();
+
+//fundera på om jag vill ha metoderna i ett objekt istället, utan klassen och hur jag gör det isåna fall.
+//Objekt med funktioner/methods i:
+let functionsForBtns = {
+
     changeChoreBtnClick(inputNewChore, placeholderErrorMessage, eTarget) {
         if (isStringEmpty(inputNewChore.value)) {
             placeholderErrorMessage.innerHTML = errorMessage;
@@ -21,54 +58,18 @@ class btnFunctions {
         else {
             eTarget.innerHTML = "Ändra";
         }
-    }
+    },
 
-    //funktion för klicket för färdig-knappen
     completedChoreBtn(e) {
         let completedChoresList = document.getElementById('completed-chores-list');
         completedChoresList.append(e.target.parentNode);
         e.target.remove();
-    }
+    },
 
-
-    //funktion för klicket för radera-knappen
     deleteChoreBtn(e) {
         e.target.parentNode.remove();
     }
-
 }
-
-
-let clickBtnFunction = new btnFunctions();
-
-//fundera på om jag vill ha metoderna i ett objekt istället, utan klassen och hur jag gör det isåna fall.
-//Objekt med funktioner/methods i:
-// let functionsForBtns = {
-
-// changeChoreBtnClick(inputNewChore, placeholderErrorMessage, eTarget) {
-//     if (isStringEmpty(inputNewChore.value)) {
-//         placeholderErrorMessage.innerHTML = errorMessage;
-//         return;
-//     }
-//     placeholderErrorMessage.innerHTML = '';
-//     inputNewChore.toggleAttribute("disabled");
-//     if (eTarget.innerHTML === "Ändra") {
-//         eTarget.innerHTML = "Spara";
-//     }
-//     else {
-//         eTarget.innerHTML = "Ändra";
-//     }
-
-//     completedChoreBtn: function(e) {
-//         let completedChoresList = document.getElementById('completed-chores-list');
-//         completedChoresList.append(e.target.parentNode);
-//         e.target.remove();
-//     }
-
-//     deleteChoreBtn: function(e) {
-//         e.target.parentNode.remove();
-//     }
-// }
 
 //Början på att lägga till enter. Lägg till om tid finns.
 // input.addEventListener('keyup' function() {})
@@ -86,9 +87,10 @@ addChore.addEventListener('click', function () {
     let newChoreInput = document.createElement("input");
     newChoreInput.value = input.value;
     newChoreInput.setAttribute('type', 'text');
-    let displayErrorMessage = document.getElementsByClassName('display-error-message');
+    // let displayErrorMessage = document.getElementsByClassName('display-error-message');
+    let displayErrorMessage = document.getElementById('display-error-message');
     if (isStringEmpty(input.value)) {
-        // errorMessage = 'Skriv i en syssla'
+        //errorMessage = 'Skriv i en syssla'
         displayErrorMessage.innerHTML = errorMessage;
         return;
     }
@@ -104,22 +106,23 @@ addChore.addEventListener('click', function () {
     let changeChoreBtn = document.createElement('button');
     changeChoreBtn.innerHTML = "Ändra";
     changeChoreBtn.addEventListener("click", function (e) {
-        clickBtnFunction.changeChoreBtnClick(newChoreInput, placeholderForErrorMessageDiv, e.target);
+        //clickBtnFunction.changeChoreBtnClick(newChoreInput, placeholderForErrorMessageDiv, e.target);
+        functionsForBtns.changeChoreBtnClick(newChoreInput, placeholderForErrorMessageDiv, e.target);
     })
 
 
     //Försök till att lyfta ur färdig-knappens click-funktion till objekt och class
     let completedChoreBtn = document.createElement('button');
     completedChoreBtn.innerHTML = "Färdig";
-    completedChoreBtn.addEventListener("click", clickBtnFunction.completedChoreBtn);
-
+    //completedChoreBtn.addEventListener("click", clickBtnFunction.completedChoreBtn);
+    completedChoreBtn.addEventListener("click", functionsForBtns.completedChoreBtn);
 
 
     //Försök till att lyfta ur radera-knappens click-funktion till objekt och class
     let deleteChoreBtn = document.createElement('button');
     deleteChoreBtn.innerHTML = "Radera";
-    deleteChoreBtn.addEventListener("click", clickBtnFunction.deleteChoreBtn);
-
+    //deleteChoreBtn.addEventListener("click", clickBtnFunction.deleteChoreBtn);
+    deleteChoreBtn.addEventListener("click", functionsForBtns.deleteChoreBtn);
 
 
     let toDoChores = document.getElementById('to-do-list');
