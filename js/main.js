@@ -45,32 +45,39 @@ let clickBtnFunction = new btnFunctions();
 //Objekt med funktioner/methods i:
 // let functionsForBtns = {
 
-// completedChoreBtn: function(e) {
-//     let completedChoresList = document.getElementById('completed-chores-list');
-//     completedChoresList.append(e.target.parentNode);
-//     e.target.remove();
-// }
+// changeChoreBtnClick(inputNewChore, placeholderErrorMessage, eTarget) {
+//     if (isStringEmpty(inputNewChore.value)) {
+//         placeholderErrorMessage.innerHTML = errorMessage;
+//         return;
+//     }
+//     placeholderErrorMessage.innerHTML = '';
+//     inputNewChore.toggleAttribute("disabled");
+//     if (eTarget.innerHTML === "Ändra") {
+//         eTarget.innerHTML = "Spara";
+//     }
+//     else {
+//         eTarget.innerHTML = "Ändra";
+//     }
 
-// deleteChoreBtn: function(e) {
-//     e.target.parentNode.remove();
-// }
+//     completedChoreBtn: function(e) {
+//         let completedChoresList = document.getElementById('completed-chores-list');
+//         completedChoresList.append(e.target.parentNode);
+//         e.target.remove();
+//     }
 
-//     deleteChoreBtn: function() {
-//         deleteChoreBtn.innerHTML = "Radera";
-//         deleteChoreBtn.addEventListener('click', function (e) {
-//             e.target.parentNode.remove();
-//         })
+//     deleteChoreBtn: function(e) {
+//         e.target.parentNode.remove();
 //     }
 // }
 
-
+//Början på att lägga till enter. Lägg till om tid finns.
+// input.addEventListener('keyup' function() {})
 
 //Lägg till knappens funktioner
 let addChore = document.getElementById('add-chore-btn');
 let input = document.getElementById('add-chore')
 
-//Början på att lägga till enter. Lägg till om tid finns.
-// input.addEventListener('keyup' function() {})
+
 
 
 
