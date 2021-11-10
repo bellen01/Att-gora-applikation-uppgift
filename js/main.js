@@ -60,6 +60,16 @@ let functionsForBtns = {
         }
     },
 
+    // completedChoreBtn(e) {
+    //     let completedChoresList = document.getElementById('completed-chores-list');
+    //     let button = e.target;
+    //     completedChoresList.append(button.parentNode);
+    //     // button.remove();
+    //     let buttonParent = button.parentNode;
+    //     let ul = buttonParent.parentNode;
+    //     buttonParent.lastElementChild.remove();
+    // },
+
     completedChoreBtn(e) {
         let completedChoresList = document.getElementById('completed-chores-list');
         completedChoresList.append(e.target.parentNode);
@@ -71,26 +81,26 @@ let functionsForBtns = {
     }
 }
 
-//Början på att lägga till enter. Lägg till om tid finns.
-// input.addEventListener('keyup' function() {})
+
 
 //Lägg till knappens funktioner
 let addChore = document.getElementById('add-chore-btn');
-let input = document.getElementById('add-chore')
+let input = document.getElementById('add-chore');
 
-
-
-
-
+//Enter
+input.addEventListener("keyup", function (e) {
+    // Number 13 is the "Enter" key on the keyboard
+    if (e.keyCode === 13) {
+        addChore.click();
+    }
+});
 addChore.addEventListener('click', function () {
     let li = document.createElement('li');
     let newChoreInput = document.createElement("input");
     newChoreInput.value = input.value;
     newChoreInput.setAttribute('type', 'text');
-    // let displayErrorMessage = document.getElementsByClassName('display-error-message');
     let displayErrorMessage = document.getElementById('display-error-message');
     if (isStringEmpty(input.value)) {
-        //errorMessage = 'Skriv i en syssla'
         displayErrorMessage.innerHTML = errorMessage;
         return;
     }
@@ -98,7 +108,7 @@ addChore.addEventListener('click', function () {
     input.value = '';
     newChoreInput.setAttribute('disabled', 'true');
     let placeholderForErrorMessageDiv = document.createElement('div');
-    placeholderForErrorMessageDiv.className = 'display-error-message';
+    placeholderForErrorMessageDiv.className = 'error-message';
 
 
 
@@ -109,7 +119,12 @@ addChore.addEventListener('click', function () {
         //clickBtnFunction.changeChoreBtnClick(newChoreInput, placeholderForErrorMessageDiv, e.target);
         functionsForBtns.changeChoreBtnClick(newChoreInput, placeholderForErrorMessageDiv, e.target);
     })
-
+    // Enter trigger
+    newChoreInput.addEventListener("keyup", function (event) {
+        if (event.keyCode === 13) {
+            changeChoreBtn.click()
+        }
+    })
 
     //Försök till att lyfta ur färdig-knappens click-funktion till objekt och class
     let completedChoreBtn = document.createElement('button');
@@ -125,14 +140,42 @@ addChore.addEventListener('click', function () {
     deleteChoreBtn.addEventListener("click", functionsForBtns.deleteChoreBtn);
 
 
+
+    let moveChoreUpBtn = document.createElement('button');
+    moveChoreUpBtn.innerHTML = "Flytta upp";
+    moveChoreUpBtn.addEventListener("click", function (e) {
+        let button = e.target;
+        let li = button.parentNode;
+        let ul = li.parentNode;
+        let prevLi = li.previousElementSibling;
+        if (prevLi) {
+            ul.insertBefore(li, prevLi);
+        }
+
+    })
+
+    let moveChoreDownBtn = document.createElement('button');
+    moveChoreDownBtn.innerHTML = "Flytta ner";
+    moveChoreDownBtn.addEventListener("click", function (e) {
+        let button = e.target;
+        let li = button.parentNode;
+        let ul = li.parentNode;
+        let nextLi = li.nextElementSibling;
+        if (nextLi) {
+            ul.insertBefore(nextLi, li);
+        }
+
+    })
+
+
     let toDoChores = document.getElementById('to-do-list');
     toDoChores.append(li);
-    li.append(newChoreInput, changeChoreBtn, completedChoreBtn, deleteChoreBtn, placeholderForErrorMessageDiv);
+    li.append(newChoreInput, changeChoreBtn, completedChoreBtn, deleteChoreBtn, moveChoreUpBtn, moveChoreDownBtn, placeholderForErrorMessageDiv);
 
 })
 
 
-//Återställ knappen skapad med js
+
 let removeAllChoresBtn = document.createElement("button");
 removeAllChoresBtn.innerHTML = "Återställ";
 let placeBesideAddChoreBtn = document.getElementById("add-chore-btns");
