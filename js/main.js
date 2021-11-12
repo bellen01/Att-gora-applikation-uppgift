@@ -17,10 +17,10 @@ let functionsForBtns = {
     },
 
     createNewElement(elementToCreate, text, newClass) {
-        elementName = document.createElement(elementToCreate);
-        elementName.innerHTML = text;
-        elementName.classList.add(newClass);
-        return elementName;
+        let element = document.createElement(elementToCreate);
+        element.innerHTML = text;
+        element.classList.add(newClass);
+        return element;
     },
 
     editChore(inputNewChore, choreErrorMessage, button) {
@@ -79,16 +79,18 @@ let functionsForBtns = {
 
     showAndHideMoveBtns() {
         let allMoveUpBtns = Array.from(document.getElementsByClassName('move-up'));
-        let removeFirst = allMoveUpBtns.shift();
-        removeFirst.classList.add('hide-btns');
-        for (let upBtns of allMoveUpBtns) {
-            upBtns.classList.remove('hide-btns');
-        }
-        let allMoveDownBtns = Array.from(document.getElementsByClassName('move-down'));
-        let removeLast = allMoveDownBtns.pop();
-        removeLast.classList.add('hide-btns');
-        for (let downBtns of allMoveDownBtns) {
-            downBtns.classList.remove('hide-btns');
+        if (allMoveUpBtns.length > 0) {
+            let removeFirst = allMoveUpBtns.shift();
+            removeFirst.classList.add('hide-btns');
+            for (let upBtns of allMoveUpBtns) {
+                upBtns.classList.remove('hide-btns');
+            }
+            let allMoveDownBtns = Array.from(document.getElementsByClassName('move-down'));
+            let removeLast = allMoveDownBtns.pop();
+            removeLast.classList.add('hide-btns');
+            for (let downBtns of allMoveDownBtns) {
+                downBtns.classList.remove('hide-btns');
+            }
         }
     },
 
@@ -100,7 +102,7 @@ let functionsForBtns = {
             }
         }
     }
-}
+};
 
 
 addChoreInput.addEventListener('keyup', (e) => functionsForBtns.enterKeyTrigger(e, addChoreBtn));
@@ -151,7 +153,7 @@ addChoreBtn.addEventListener('click', function () {
     li.append(newChoreInput, editChoreBtn, completedChoreBtn, deleteChoreBtn, moveChoreUpBtn, moveChoreDownBtn, choreErrorMessage);
 
     functionsForBtns.showAndHideMoveBtns();
-})
+});
 
 
 let removeAllChoresBtn = functionsForBtns.createNewElement('button', 'Återställ', 'buttons');
