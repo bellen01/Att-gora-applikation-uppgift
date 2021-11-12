@@ -33,7 +33,7 @@ lägg till klass på den första respektive sista, och ta bort den på alla andr
 
 // class btnFunctions {
 
-// changeChoreBtnClick(inputNewChore, placeholderErrorMessage, eTarget) {
+// editChoreBtnClick(inputNewChore, placeholderErrorMessage, eTarget) {
 //     if (isStringEmpty(inputNewChore.value)) {
 //         placeholderErrorMessage.innerHTML = errorMessage;
 //         return;
@@ -48,12 +48,7 @@ lägg till klass på den första respektive sista, och ta bort den på alla andr
 //     }
 // }
 
-//     //funktion för klicket för färdig-knappen
-//     completedChoreBtn(e) {
-//         let completedChoresList = document.getElementById('completed-chores-list');
-//         completedChoresList.append(e.target.parentNode);
-//         e.target.remove();
-//     }
+
 
 // completedChoreBtn(e) {
 //     let completedChoresList = document.getElementById('completed-chores-list');
@@ -68,6 +63,7 @@ lägg till klass på den första respektive sista, och ta bort den på alla andr
 //         }
 //     }
 //     button.remove();
+//     functionsForBtns.showAndHideMoveBtns();
 // }
 
 
@@ -75,6 +71,11 @@ lägg till klass på den första respektive sista, och ta bort den på alla andr
 //     deleteChoreBtn(e) {
 //         e.target.parentNode.remove();
 //     }
+
+// deleteChoreBtn(e) {
+//     e.target.parentNode.remove();
+//     functionsForBtns.showAndHideMoveBtns();
+// }
 
 // moveUpOrDown(button, up) {
 //     let li = button.parentNode;
@@ -109,7 +110,7 @@ let functionsForBtns = {
         return elementName;
     },
 
-    changeChoreBtnClick(inputNewChore, placeholderErrorMessage, eTarget) {
+    editChoreBtnClick(inputNewChore, placeholderErrorMessage, eTarget) {
         if (isStringEmpty(inputNewChore.value)) {
             placeholderErrorMessage.innerHTML = errorMessage;
             return;
@@ -168,26 +169,25 @@ let functionsForBtns = {
         console.log(allMoveUpBtns)
         let removeFirst = allMoveUpBtns.shift();
         // removeFirst.setAttribute('disabled', 'true');
-        removeFirst.style.display = 'none';
-        // removeFirst.classList.add('hide-btns');
+        // removeFirst.style.display = 'none';
+        removeFirst.classList.add('hide-btns');
         for (let upBtns of allMoveUpBtns) {
             // upBtns.removeAttribute('disabled');
-            // upBtns.classList.remove('hide-btns');
-            upBtns.style.display = 'inline-block';
+            upBtns.classList.remove('hide-btns');
+            // upBtns.style.display = 'inline-block';
         }
         let allMoveDownBtns = Array.from(document.getElementsByClassName('move-down'));
         let removeLast = allMoveDownBtns.pop();
         // removeLast.setAttribute('disabled', 'true');
-        removeLast.style.display = 'none';
-        // removeLast.classList.add('hide-btns');
+        // removeLast.style.display = 'none';
+        removeLast.classList.add('hide-btns');
         for (let downBtns of allMoveDownBtns) {
             // downBtns.removeAttribute('disabled');
-            downBtns.style.display = 'inline-block';
-            // downBtns.classList.remove('hide-btns');
+            // downBtns.style.display = 'inline-block';
+            downBtns.classList.remove('hide-btns');
         }
     }
 }
-
 
 
 input.addEventListener('keyup', function (e) {
@@ -214,69 +214,56 @@ addChore.addEventListener('click', function () {
     placeholderForErrorMessageDiv.className = 'error-message';
 
 
-    let changeChoreBtn = functionsForBtns.createNewElement('button', 'Ändra', 'buttons');
-    // changeChoreBtn.style.margin = '5px';
-    //let changeChoreBtn = document.createElement('button');
-    // changeChoreBtn.innerHTML = "Ändra";
-    changeChoreBtn.addEventListener('click', function (e) {
-        //clickBtnFunction.changeChoreBtnClick(newChoreInput, placeholderForErrorMessageDiv, e.target);
-        functionsForBtns.changeChoreBtnClick(newChoreInput, placeholderForErrorMessageDiv, e.target);
+    let editChoreBtn = functionsForBtns.createNewElement('button', 'Ändra', 'buttons');
+    editChoreBtn.addEventListener('click', function (e) {
+        //clickBtnFunction.editChoreBtnClick(newChoreInput, placeholderForErrorMessageDiv, e.target);
+        functionsForBtns.editChoreBtnClick(newChoreInput, placeholderForErrorMessageDiv, e.target);
     })
 
 
     newChoreInput.addEventListener('keyup', function (e) {
         if (e.key === 'Enter') {
-            changeChoreBtn.click()
+            editChoreBtn.click()
         }
     })
 
     let moveChoreUpBtn = functionsForBtns.createNewElement('button', 'Upp', 'buttons');
-    // let moveChoreUpBtn = document.createElement('button');
-    // moveChoreUpBtn.innerHTML = "Flytta upp";
     moveChoreUpBtn.classList.add('move-chore', 'move-up');
     moveChoreUpBtn.addEventListener('click', function (e) {
         functionsForBtns.moveUpOrDown(e.target, true)
     })
 
     let moveChoreDownBtn = functionsForBtns.createNewElement('button', 'Ner', 'buttons');
-    // let moveChoreDownBtn = document.createElement('button');
-    // moveChoreDownBtn.innerHTML = "Flytta ner";
     moveChoreDownBtn.classList.add('move-chore', 'move-down');
     moveChoreDownBtn.addEventListener('click', function (e) {
         functionsForBtns.moveUpOrDown(e.target, false)
     })
 
     let completedChoreBtn = functionsForBtns.createNewElement('button', 'Färdig', 'buttons');
-    // let completedChoreBtn = document.createElement('button');
-    // completedChoreBtn.innerHTML = "Färdig";
     //completedChoreBtn.addEventListener("click", clickBtnFunction.completedChoreBtn);
     completedChoreBtn.addEventListener('click', functionsForBtns.completedChoreBtn);
 
     let deleteChoreBtn = functionsForBtns.createNewElement('button', 'Radera', 'buttons');
-    // let deleteChoreBtn = document.createElement('button');
-    // deleteChoreBtn.innerHTML = "Radera";
     //deleteChoreBtn.addEventListener("click", clickBtnFunction.deleteChoreBtn);
     deleteChoreBtn.addEventListener('click', functionsForBtns.deleteChoreBtn);
 
 
     let toDoChores = document.getElementById('to-do-list');
     toDoChores.append(li);
-    li.append(newChoreInput, changeChoreBtn, completedChoreBtn, deleteChoreBtn, moveChoreUpBtn, moveChoreDownBtn, placeholderForErrorMessageDiv);
+    li.append(newChoreInput, editChoreBtn, completedChoreBtn, deleteChoreBtn, moveChoreUpBtn, moveChoreDownBtn, placeholderForErrorMessageDiv);
 
     functionsForBtns.showAndHideMoveBtns();
 })
 
 
 let removeAllChoresBtn = functionsForBtns.createNewElement('button', 'Återställ', 'buttons');
-// let removeAllChoresBtn = document.createElement("button");
-// removeAllChoresBtn.innerHTML = "Återställ";
 let placeBesideAddChoreBtn = document.getElementById('add-chore-btns');
 placeBesideAddChoreBtn.append(removeAllChoresBtn);
 removeAllChoresBtn.addEventListener('click', function () {
     let ul = document.getElementsByTagName('ul');
-    for (let i of ul) {
-        while (i.lastElementChild) {
-            i.firstElementChild.remove();
+    for (let li of ul) {
+        while (li.lastElementChild) {
+            li.firstElementChild.remove();
         }
     }
 })
