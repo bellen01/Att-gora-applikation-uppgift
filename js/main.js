@@ -1,144 +1,162 @@
 
-let errorMessage = 'Skriv i en syssla';
+const errorMessage = 'Skriv i en syssla';
 function isStringEmpty(text) {
-    return text.trim() === "";
+    return text.trim() === '';
 }
 
+let addChoreBtn = document.getElementById('add-chore-btn');
+let addChoreInput = document.getElementById('add-chore');
 
-class btnFunctions {
 
-    //funktion för ändra knappen
-    changeChoreBtnClick(inputNewChore, placeholderErrorMessage, eTarget) {
+let functionsForBtns = {
+
+    enterKeyTrigger(e, btn) {
+        if (e.key === 'Enter') {
+            btn.click();
+        }
+    },
+
+    createNewElement(elementToCreate, text, newClass) {
+        let element = document.createElement(elementToCreate);
+        element.innerHTML = text;
+        element.classList.add(newClass);
+        return element;
+    },
+
+    editChore(inputNewChore, choreErrorMessage, button) {
         if (isStringEmpty(inputNewChore.value)) {
-            placeholderErrorMessage.innerHTML = errorMessage;
+            choreErrorMessage.innerHTML = errorMessage;
             return;
         }
-        placeholderErrorMessage.innerHTML = '';
-        inputNewChore.toggleAttribute("disabled");
-        if (eTarget.innerHTML === "Ändra") {
-            eTarget.innerHTML = "Spara";
+        choreErrorMessage.innerHTML = '';
+        inputNewChore.toggleAttribute('disabled');
+        if (button.innerHTML === 'Ändra') {
+            button.innerHTML = 'Spara';
         }
         else {
-            eTarget.innerHTML = "Ändra";
+            button.innerHTML = 'Ändra';
+        }
+    },
+
+    completedChore(e) {
+        let completedChoresList = document.getElementById('completed-chores-list');
+        let button = e.target;
+        let buttonParent = button.parentNode;
+        completedChoresList.append(buttonParent);
+        let itemsWithMoveChoreClass = document.getElementsByClassName('move-chore');
+        let moveChoresBtns = Array.from(itemsWithMoveChoreClass);
+        for (let child of moveChoresBtns) {
+            if (child.parentNode === buttonParent) {
+                child.remove();
+            }
+        }
+        button.remove();
+        functionsForBtns.showAndHideMoveBtns();
+    },
+
+    deleteChore(e) {
+        e.target.parentNode.remove();
+        functionsForBtns.showAndHideMoveBtns();
+    },
+
+    moveUpOrDown(button, up) {
+        let li = button.parentNode;
+        let ul = li.parentNode;
+        if (up == true) {
+            let prevLi = li.previousElementSibling;
+            if (prevLi) {
+                ul.insertBefore(li, prevLi);
+            }
+        }
+        else {
+            let nextLi = li.nextElementSibling;
+            if (nextLi) {
+                ul.insertBefore(nextLi, li);
+            }
+        }
+        functionsForBtns.showAndHideMoveBtns();
+    },
+
+    showAndHideMoveBtns() {
+        let allMoveUpBtns = Array.from(document.getElementsByClassName('move-up'));
+        if (allMoveUpBtns.length > 0) {
+            let removeFirst = allMoveUpBtns.shift();
+            removeFirst.classList.add('hide-btns');
+            for (let upBtns of allMoveUpBtns) {
+                upBtns.classList.remove('hide-btns');
+            }
+            let allMoveDownBtns = Array.from(document.getElementsByClassName('move-down'));
+            let removeLast = allMoveDownBtns.pop();
+            removeLast.classList.add('hide-btns');
+            for (let downBtns of allMoveDownBtns) {
+                downBtns.classList.remove('hide-btns');
+            }
+        }
+    },
+
+    removeAllChores() {
+        let ul = document.getElementsByTagName('ul');
+        for (let li of ul) {
+            while (li.lastElementChild) {
+                li.firstElementChild.remove();
+            }
         }
     }
-
-    //funktion för klicket för färdig-knappen
-    completedChoreBtn(e) {
-        let completedChoresList = document.getElementById('completed-chores-list');
-        completedChoresList.append(e.target.parentNode);
-        e.target.remove();
-    }
+};
 
 
-    //funktion för klicket för radera-knappen
-    deleteChoreBtn(e) {
-        e.target.parentNode.remove();
-    }
+addChoreInput.addEventListener('keyup', (e) => functionsForBtns.enterKeyTrigger(e, addChoreBtn));
 
-}
-
-
-let clickBtnFunction = new btnFunctions();
-
-//fundera på om jag vill ha metoderna i ett objekt istället, utan klassen och hur jag gör det isåna fall.
-//Objekt med funktioner/methods i:
-// let functionsForBtns = {
-
-// changeChoreBtnClick(inputNewChore, placeholderErrorMessage, eTarget) {
-//     if (isStringEmpty(inputNewChore.value)) {
-//         placeholderErrorMessage.innerHTML = errorMessage;
-//         return;
-//     }
-//     placeholderErrorMessage.innerHTML = '';
-//     inputNewChore.toggleAttribute("disabled");
-//     if (eTarget.innerHTML === "Ändra") {
-//         eTarget.innerHTML = "Spara";
-//     }
-//     else {
-//         eTarget.innerHTML = "Ändra";
-//     }
-
-//     completedChoreBtn: function(e) {
-//         let completedChoresList = document.getElementById('completed-chores-list');
-//         completedChoresList.append(e.target.parentNode);
-//         e.target.remove();
-//     }
-
-//     deleteChoreBtn: function(e) {
-//         e.target.parentNode.remove();
-//     }
-// }
-
-//Början på att lägga till enter. Lägg till om tid finns.
-// input.addEventListener('keyup' function() {})
-
-//Lägg till knappens funktioner
-let addChore = document.getElementById('add-chore-btn');
-let input = document.getElementById('add-chore')
-
-
-
-
-
-addChore.addEventListener('click', function () {
+addChoreBtn.addEventListener('click', function () {
     let li = document.createElement('li');
-    let newChoreInput = document.createElement("input");
-    newChoreInput.value = input.value;
+    let newChoreInput = document.createElement('input');
+    newChoreInput.classList.add('input-field');
+    newChoreInput.value = addChoreInput.value;
     newChoreInput.setAttribute('type', 'text');
-    let displayErrorMessage = document.getElementsByClassName('display-error-message');
-    if (isStringEmpty(input.value)) {
-        // errorMessage = 'Skriv i en syssla'
+    let displayErrorMessage = document.getElementById('display-error-message');
+    if (isStringEmpty(addChoreInput.value)) {
         displayErrorMessage.innerHTML = errorMessage;
         return;
     }
     displayErrorMessage.innerHTML = '';
-    input.value = '';
+    addChoreInput.value = '';
     newChoreInput.setAttribute('disabled', 'true');
-    let placeholderForErrorMessageDiv = document.createElement('div');
-    placeholderForErrorMessageDiv.className = 'display-error-message';
+    let choreErrorMessage = document.createElement('div');
+    choreErrorMessage.className = 'error-message';
 
 
-
-    //Försök till att lyfta ur ändra-knappens click-funktion till objekt och class
-    let changeChoreBtn = document.createElement('button');
-    changeChoreBtn.innerHTML = "Ändra";
-    changeChoreBtn.addEventListener("click", function (e) {
-        clickBtnFunction.changeChoreBtnClick(newChoreInput, placeholderForErrorMessageDiv, e.target);
-    })
+    let editChoreBtn = functionsForBtns.createNewElement('button', 'Ändra', 'buttons');
+    editChoreBtn.addEventListener('click', (e) => functionsForBtns.editChore(newChoreInput, choreErrorMessage, e.target));
+    newChoreInput.addEventListener('keyup', (e) => functionsForBtns.enterKeyTrigger(e, editChoreBtn));
 
 
-    //Försök till att lyfta ur färdig-knappens click-funktion till objekt och class
-    let completedChoreBtn = document.createElement('button');
-    completedChoreBtn.innerHTML = "Färdig";
-    completedChoreBtn.addEventListener("click", clickBtnFunction.completedChoreBtn);
+    let moveChoreUpBtn = functionsForBtns.createNewElement('button', 'Upp', 'buttons');
+    moveChoreUpBtn.classList.add('move-chore', 'move-up');
+    moveChoreUpBtn.addEventListener('click', (e) => functionsForBtns.moveUpOrDown(e.target, true));
 
 
+    let moveChoreDownBtn = functionsForBtns.createNewElement('button', 'Ner', 'buttons');
+    moveChoreDownBtn.classList.add('move-chore', 'move-down');
+    moveChoreDownBtn.addEventListener('click', (e) => functionsForBtns.moveUpOrDown(e.target, false));
 
-    //Försök till att lyfta ur radera-knappens click-funktion till objekt och class
-    let deleteChoreBtn = document.createElement('button');
-    deleteChoreBtn.innerHTML = "Radera";
-    deleteChoreBtn.addEventListener("click", clickBtnFunction.deleteChoreBtn);
 
+    let completedChoreBtn = functionsForBtns.createNewElement('button', 'Färdig', 'buttons');
+    completedChoreBtn.addEventListener('click', functionsForBtns.completedChore);
+
+
+    let deleteChoreBtn = functionsForBtns.createNewElement('button', 'Radera', 'buttons');
+    deleteChoreBtn.addEventListener('click', functionsForBtns.deleteChore);
 
 
     let toDoChores = document.getElementById('to-do-list');
     toDoChores.append(li);
-    li.append(newChoreInput, changeChoreBtn, completedChoreBtn, deleteChoreBtn, placeholderForErrorMessageDiv);
+    li.append(newChoreInput, editChoreBtn, completedChoreBtn, deleteChoreBtn, moveChoreUpBtn, moveChoreDownBtn, choreErrorMessage);
 
-})
+    functionsForBtns.showAndHideMoveBtns();
+});
 
 
-//Återställ knappen skapad med js
-let removeAllChoresBtn = document.createElement("button");
-removeAllChoresBtn.innerHTML = "Återställ";
-let placeBesideAddChoreBtn = document.getElementById("add-chore-btns");
+let removeAllChoresBtn = functionsForBtns.createNewElement('button', 'Återställ', 'buttons');
+let placeBesideAddChoreBtn = document.getElementById('add-chore-btns');
 placeBesideAddChoreBtn.append(removeAllChoresBtn);
-removeAllChoresBtn.addEventListener('click', function () {
-    let ul = document.getElementsByTagName('ul');
-    for (let i of ul) {
-        while (i.lastElementChild) {
-            i.firstElementChild.remove();
-        }
-    }
-})
+removeAllChoresBtn.addEventListener('click', functionsForBtns.removeAllChores);
