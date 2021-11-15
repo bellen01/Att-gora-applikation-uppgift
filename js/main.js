@@ -12,17 +12,17 @@ addChoreInput.focus();
 addChoreInput.addEventListener('keyup', (e) => functionsForBtns.enterKeyTrigger(e, addChoreBtn));
 
 addChoreBtn.addEventListener('click', function () {
-    let li = document.createElement('li');
-    let newChoreInput = document.createElement('input');
-    newChoreInput.classList.add('input-field');
-    newChoreInput.value = addChoreInput.value;
-    newChoreInput.setAttribute('type', 'text');
     let displayErrorMessage = document.getElementById('display-error-message');
     if (isStringEmpty(addChoreInput.value)) {
         displayErrorMessage.innerHTML = errorMessage;
         return;
     }
     displayErrorMessage.innerHTML = '';
+    let li = document.createElement('li');
+    let newChoreInput = document.createElement('input');
+    newChoreInput.classList.add('input-field');
+    newChoreInput.value = addChoreInput.value;
+    newChoreInput.setAttribute('type', 'text');
     addChoreInput.value = '';
     newChoreInput.setAttribute('disabled', 'true');
     let choreErrorMessage = document.createElement('div');
