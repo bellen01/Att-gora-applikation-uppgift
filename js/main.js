@@ -6,6 +6,7 @@ function isStringEmpty(text) {
 
 let addChoreBtn = document.getElementById('add-chore-btn');
 let addChoreInput = document.getElementById('add-chore');
+addChoreInput.focus();
 
 
 addChoreInput.addEventListener('keyup', (e) => functionsForBtns.enterKeyTrigger(e, addChoreBtn));
