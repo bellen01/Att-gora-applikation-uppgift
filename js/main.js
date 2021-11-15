@@ -8,103 +8,6 @@ let addChoreBtn = document.getElementById('add-chore-btn');
 let addChoreInput = document.getElementById('add-chore');
 
 
-let functionsForBtns = {
-
-    enterKeyTrigger(e, btn) {
-        if (e.key === 'Enter') {
-            btn.click();
-        }
-    },
-
-    createNewElement(elementToCreate, text, newClass) {
-        let element = document.createElement(elementToCreate);
-        element.innerHTML = text;
-        element.classList.add(newClass);
-        return element;
-    },
-
-    editChore(inputNewChore, choreErrorMessage, button) {
-        if (isStringEmpty(inputNewChore.value)) {
-            choreErrorMessage.innerHTML = errorMessage;
-            return;
-        }
-        choreErrorMessage.innerHTML = '';
-        inputNewChore.toggleAttribute('disabled');
-        if (button.innerHTML === 'Ändra') {
-            button.innerHTML = 'Spara';
-        }
-        else {
-            button.innerHTML = 'Ändra';
-        }
-    },
-
-    completedChore(e) {
-        let completedChoresList = document.getElementById('completed-chores-list');
-        let button = e.target;
-        let buttonParent = button.parentNode;
-        completedChoresList.append(buttonParent);
-        let itemsWithMoveChoreClass = document.getElementsByClassName('move-chore');
-        let moveChoresBtns = Array.from(itemsWithMoveChoreClass);
-        for (let child of moveChoresBtns) {
-            if (child.parentNode === buttonParent) {
-                child.remove();
-            }
-        }
-        button.remove();
-        functionsForBtns.showAndHideMoveBtns();
-    },
-
-    deleteChore(e) {
-        e.target.parentNode.remove();
-        functionsForBtns.showAndHideMoveBtns();
-    },
-
-    moveUpOrDown(button, up) {
-        let li = button.parentNode;
-        let ul = li.parentNode;
-        if (up == true) {
-            let prevLi = li.previousElementSibling;
-            if (prevLi) {
-                ul.insertBefore(li, prevLi);
-            }
-        }
-        else {
-            let nextLi = li.nextElementSibling;
-            if (nextLi) {
-                ul.insertBefore(nextLi, li);
-            }
-        }
-        functionsForBtns.showAndHideMoveBtns();
-    },
-
-    showAndHideMoveBtns() {
-        let allMoveUpBtns = Array.from(document.getElementsByClassName('move-up'));
-        if (allMoveUpBtns.length > 0) {
-            let removeFirst = allMoveUpBtns.shift();
-            removeFirst.classList.add('hide-btns');
-            for (let upBtns of allMoveUpBtns) {
-                upBtns.classList.remove('hide-btns');
-            }
-            let allMoveDownBtns = Array.from(document.getElementsByClassName('move-down'));
-            let removeLast = allMoveDownBtns.pop();
-            removeLast.classList.add('hide-btns');
-            for (let downBtns of allMoveDownBtns) {
-                downBtns.classList.remove('hide-btns');
-            }
-        }
-    },
-
-    removeAllChores() {
-        let ul = document.getElementsByTagName('ul');
-        for (let li of ul) {
-            while (li.lastElementChild) {
-                li.firstElementChild.remove();
-            }
-        }
-    }
-};
-
-
 addChoreInput.addEventListener('keyup', (e) => functionsForBtns.enterKeyTrigger(e, addChoreBtn));
 
 addChoreBtn.addEventListener('click', function () {
@@ -130,6 +33,14 @@ addChoreBtn.addEventListener('click', function () {
     newChoreInput.addEventListener('keyup', (e) => functionsForBtns.enterKeyTrigger(e, editChoreBtn));
 
 
+    let completedChoreBtn = functionsForBtns.createNewElement('button', 'Färdig', 'buttons');
+    completedChoreBtn.addEventListener('click', functionsForBtns.completedChore);
+
+
+    let deleteChoreBtn = functionsForBtns.createNewElement('button', 'Radera', 'buttons');
+    deleteChoreBtn.addEventListener('click', functionsForBtns.deleteChore);
+
+
     let moveChoreUpBtn = functionsForBtns.createNewElement('button', 'Upp', 'buttons');
     moveChoreUpBtn.classList.add('move-chore', 'move-up');
     moveChoreUpBtn.addEventListener('click', (e) => functionsForBtns.moveUpOrDown(e.target, true));
@@ -138,14 +49,6 @@ addChoreBtn.addEventListener('click', function () {
     let moveChoreDownBtn = functionsForBtns.createNewElement('button', 'Ner', 'buttons');
     moveChoreDownBtn.classList.add('move-chore', 'move-down');
     moveChoreDownBtn.addEventListener('click', (e) => functionsForBtns.moveUpOrDown(e.target, false));
-
-
-    let completedChoreBtn = functionsForBtns.createNewElement('button', 'Färdig', 'buttons');
-    completedChoreBtn.addEventListener('click', functionsForBtns.completedChore);
-
-
-    let deleteChoreBtn = functionsForBtns.createNewElement('button', 'Radera', 'buttons');
-    deleteChoreBtn.addEventListener('click', functionsForBtns.deleteChore);
 
 
     let toDoChores = document.getElementById('to-do-list');
