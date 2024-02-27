@@ -1,5 +1,5 @@
 
-const errorMessage = 'Skriv i en syssla';
+const errorMessage = 'You have to add a todo';
 function isStringEmpty(text) {
     return text.trim() === '';
 }
