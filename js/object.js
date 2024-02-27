@@ -20,11 +20,11 @@ let functionsForBtns = {
         }
         choreErrorMessage.innerHTML = '';
         inputNewChore.toggleAttribute('disabled');
-        if (button.innerHTML === 'Ändra') {
-            button.innerHTML = 'Spara';
+        if (button.innerHTML === 'Edit') {
+            button.innerHTML = 'Save';
         }
         else {
-            button.innerHTML = 'Ändra';
+            button.innerHTML = 'Edit';
         }
     },
 

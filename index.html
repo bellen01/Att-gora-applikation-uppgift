@@ -6,34 +6,41 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
-    <title>Document</title>
+    <title>ToDo</title>
 </head>
 
 <body>
 
     <main>
-        <h1>Mina sysslor</h1>
-        <div id="add-chore-btns">
-            <input type="text" name="add-chore" id="add-chore" class="input-field">
-            <button id="add-chore-btn" class='buttons'>Lägg till</button>
-        </div>
-        <div id="display-error-message" class="error-message"></div>
-
-        <div>
-            <h2>Att göra</h2>
-            <div>
-                <ul id="to-do-list">
-                </ul>
+        <section class="chores-container">
+            <h1>ToDo list</h1>
+            <div id="add-chore-btns" class="add-chore-container">
+                <div>
+                    <input type="text" name="add-chore" id="add-chore" class="input-field"
+                        placeholder="Write todo here">
+                </div>
+                <div class="buttons-container">
+                    <button id="add-chore-btn" class='buttons'>Add new todo</button>
+                </div>
             </div>
-        </div>
+            <div id="display-error-message" class="error-message"></div>
 
-        <div>
-            <h2>Färdiga sysslor</h2>
             <div>
-                <ul id="completed-chores-list">
-                </ul>
+                <h2>To do</h2>
+                <div>
+                    <ul id="to-do-list">
+                    </ul>
+                </div>
             </div>
-        </div>
+
+            <div>
+                <h2>Completed</h2>
+                <div>
+                    <ul id="completed-chores-list">
+                    </ul>
+                </div>
+            </div>
+        </section>
     </main>
 
     <script src="js/object.js"></script>

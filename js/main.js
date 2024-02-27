@@ -29,25 +29,25 @@ addChoreBtn.addEventListener('click', function () {
     choreErrorMessage.className = 'error-message';
 
 
-    let editChoreBtn = functionsForBtns.createNewElement('button', 'Ändra', 'buttons');
+    let editChoreBtn = functionsForBtns.createNewElement('button', 'Edit', 'edit-button');
     editChoreBtn.addEventListener('click', (e) => functionsForBtns.editChore(newChoreInput, choreErrorMessage, e.target));
     newChoreInput.addEventListener('keyup', (e) => functionsForBtns.enterKeyTrigger(e, editChoreBtn));
 
 
-    let completedChoreBtn = functionsForBtns.createNewElement('button', 'Färdig', 'buttons');
+    let completedChoreBtn = functionsForBtns.createNewElement('button', 'Done', 'done-button');
     completedChoreBtn.addEventListener('click', functionsForBtns.completedChore);
 
 
-    let deleteChoreBtn = functionsForBtns.createNewElement('button', 'Radera', 'buttons');
+    let deleteChoreBtn = functionsForBtns.createNewElement('button', 'Delete', 'delete-button');
     deleteChoreBtn.addEventListener('click', functionsForBtns.deleteChore);
 
 
-    let moveChoreUpBtn = functionsForBtns.createNewElement('button', 'Upp', 'buttons');
+    let moveChoreUpBtn = functionsForBtns.createNewElement('button', 'Up', 'buttons');
     moveChoreUpBtn.classList.add('move-chore', 'move-up');
     moveChoreUpBtn.addEventListener('click', (e) => functionsForBtns.moveUpOrDown(e.target, true));
 
 
-    let moveChoreDownBtn = functionsForBtns.createNewElement('button', 'Ner', 'buttons');
+    let moveChoreDownBtn = functionsForBtns.createNewElement('button', 'Down', 'buttons');
     moveChoreDownBtn.classList.add('move-chore', 'move-down');
     moveChoreDownBtn.addEventListener('click', (e) => functionsForBtns.moveUpOrDown(e.target, false));
 
@@ -60,7 +60,7 @@ addChoreBtn.addEventListener('click', function () {
 });
 
 
-let removeAllChoresBtn = functionsForBtns.createNewElement('button', 'Återställ', 'buttons');
+let removeAllChoresBtn = functionsForBtns.createNewElement('button', 'Delete all todos', 'delete-button');
 let placeBesideAddChoreBtn = document.getElementById('add-chore-btns');
 placeBesideAddChoreBtn.append(removeAllChoresBtn);
 removeAllChoresBtn.addEventListener('click', functionsForBtns.removeAllChores);
